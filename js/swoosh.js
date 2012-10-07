@@ -76,6 +76,12 @@ Swoosh.Home = (function ($) {
 
             $('#select-choice-hour option[value="' + hourIndex + '"]').prop('selected', true);
             $('#select-choice-minute option[value="' + minuteIndex + '"]').prop('selected', true);
+
+            $('#select-choice-day').selectmenu("refresh", true);
+            $('#select-choice-month').selectmenu("refresh", true);
+            $('#select-choice-year').selectmenu("refresh", true);
+            $('#select-choice-hour').selectmenu("refresh", true);
+            $('#select-choice-minute').selectmenu("refresh", true);
         },
         goToMapPage:function () {
             Swoosh.Map.resetMaps();
