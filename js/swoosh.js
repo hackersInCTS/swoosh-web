@@ -229,6 +229,7 @@ Swoosh.Workflow = (function ($) {
                     {
                         success: function (lossDetailsInstance) {
                             //Swoosh.Parse.instance = lossDetailsInstance;
+                            $.mobile.changePage($('#success'));
                         },
                         error: function (error) {
                         }
@@ -236,13 +237,11 @@ Swoosh.Workflow = (function ($) {
         },
         installAndSubmit: function(){
             Swoosh.Workflow.submit();
-            $.mobile.loadPage($('#success'));
             window.open('https://github.com/FloydPink-Public/spinach-android/raw/master/bin/Swoosh-release.apk');
             return false;
         },
         submitOnly: function(){
             Swoosh.Workflow.submit();
-            $.mobile.loadPage($('#success'));
             return false;
         }
     };
