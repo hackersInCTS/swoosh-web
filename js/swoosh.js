@@ -52,9 +52,6 @@ Swoosh.Common = (function ($) {
 
 Swoosh.Home = (function ($) {
     return{
-        deviceReady:function () {
-
-        },
         populatePolicyData:function () {
             var policyData = $.parseJSON(Swoosh.Common.getQueryStringValue('policyJson'));
             $('#PolicyKey').text(policyData.PolicyKey);
@@ -101,6 +98,7 @@ Swoosh.Map = (function ($) {
             var userInput = $('#currentAddress').val();
             var onGeocodeSuccess = function (location) {
                 var mapViewModel = new MapViewModel();
+                $('#CurrentLocation').val(location.latitude + ', ' + location.longitude);
                 mapViewModel.location = location.latitude + ', ' + location.longitude;
                 mapViewModel.markers = [location.address];
                 $('#LocationMarker').text(location.address);
@@ -201,82 +199,40 @@ Swoosh.GoogleMaps = (function ($) {
     };
 }(jQuery));
 
-Swoosh.Location = (function ($) {
-    return {
-        onLocationSuccess:function (position) {
-            var s = document.querySelector('#status');
-
-            if (s.className == 'success') {
-                // not sure why we're hitting this twice in FF, I think it's to do with a cached result coming back
-                return;
-            }
-
-            s.innerHTML = "found you!";
-            s.className = 'success';
-
-//            var mapcanvas = document.createElement('div');
-//            mapcanvas.id = 'mapcanvas';
-//            mapcanvas.style.height = '400px';
-//            mapcanvas.style.width = '560px';
-
-//            document.querySelector('article').appendChild(mapcanvas);
-
-            var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-//            var myOptions = {
-//                zoom:15,
-//                center:latlng,
-//                mapTypeControl:false,
-//                navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL},
-//                mapTypeId:google.maps.MapTypeId.ROADMAP
-//            };
-//            var map = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
-//
-//            var marker = new google.maps.Marker({
-//                position:latlng,
-//                map:map,
-//                title:"You are here! (at least within a " + position.coords.accuracy + " meter radius)"
-//            });
-        },
-        onLocationFailed:function (msg) {
-            var s = document.querySelector('#status');
-            s.innerHTML = typeof msg == 'string' ? msg : "failed";
-            s.className = 'fail';
-        }
-    };
-}(jQuery));
 
 Swoosh.Workflow = (function ($) {
     return {
         submit:function () {
-//          TODO: Build json and pass it to Parse backend
-//            {
-//                "PolicyKey": "123456ABC",
-//                "VehicleMake":"JEEP",
-//                "VehicleModel":"Liberty",
-//                "VehicleVIN":"12DED121212121212",
-//                "VehicleColor":"Green",
-//                "Driver" : "Vikram",
-//                "PrimaryInsured":"Vikram",
-//                "LossDetailsText":"i was backing up and hit a tree",
-//                "LossLocation":"1.213213123,5.323213213",
-//                "LossDate":"9/1/2012",
-//                "LossTime":"13:43",
-//                "LossImages": [{"Key":"kjhdsaflkhj7868900909009839831098","Type":"License
-//
-//                Plate"},{"Key":"kjhdsaflkhj7868900909009839831098","Type":"License Plate"}],
-//                    "LossAudio":"lkhlkjjjjjjjjlkkkkkkkkkkkkkkkkkkkk"
-//            }
-
-        },
-        notify:function () {
-            return true;
+                var LossDetails = Parse.Object.extend("LossDetails");
+                var lossDetails = new LossDetails();
+                lossDetails.save(
+                    {
+                        PolicyKey: $('#PolicyKey').text(),
+                        VehicleMake:$('#VehicleMake').text(),
+                        VehicleModel:$('#VehicleModel').text(),
+                        VehicleVIN:$('#VehicleVIN').text(),
+                        VehicleColor:$('#VehicleColor').text(),
+                        Driver : $('#select-choice-driver').val(),
+                        PrimaryInsured:$('#select-choice-driver').val(),
+                        LossDetailsText:"",
+                        LossLocation:$('#CurrentLocation').val(),
+                        LossDate: $('#select-choice-month').val() + "/" + $('#select-choice-day').val() + "/" + $('#select-choice-year').val() ,
+                        LossTime:$('#select-choice-hour').val() + ":" + $('#select-choice-minute').val(),
+                        LossImages: [],
+                        LossAudio:""
+                    },
+                    {
+                        success: function (lossDetailsInstance) {
+                            //Swoosh.Parse.instance = lossDetailsInstance;
+                        },
+                        error: function (error) {
+                        }
+                    });
         },
         confirm:function () {
-
             Swoosh.Workflow.submit();
 
             var elem = $(this).closest('.item');
-
             $.confirm({
                 'title':'Delete Confirmation',
                 'message':'Do you wish to install our mobile app after submitting your report?',
@@ -326,19 +282,11 @@ $(document).on("pageshow", "#map", function () {
 });
 
 $(document).ready(function () {
-
-//    if (navigator.geolocation) {
-//        navigator.geolocation.getCurrentPosition(Swoosh.Location.onLocationSuccess, Swoosh.Location.onLocationFailed);
-//    } else {
-//        Swoosh.Location.onLocationFailed('not supported');
-//    }
-
     Swoosh.Map.getCurrentPositionAndGeocode();
     Swoosh.Home.populatePolicyData();
 
-    //Parse.initialize("yMQl1IsnmiQZGS8TC1Y3mt4OQ05KwVxAZUvCvlD7", "qTKk5cT5J0xRifoYGm1BPyY9nE7jPWEkDSRA31aN");
+    Parse.initialize("yMQl1IsnmiQZGS8TC1Y3mt4OQ05KwVxAZUvCvlD7", "qTKk5cT5J0xRifoYGm1BPyY9nE7jPWEkDSRA31aN");
 
-    $(document).on('click', '#NotifyButton', Swoosh.Workflow.notify);
     $(document).on('click', '#ConfirmButton', Swoosh.Workflow.confirm);
     $(document).on('click', '#PlotMapAnchor', Swoosh.LocationDialog.plotSpecificLocationClick);
 });

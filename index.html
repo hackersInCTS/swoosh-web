@@ -246,14 +246,20 @@
     <p>
 
     <div data-role="fieldcontain" data-theme="b">
-
         <input type="text" name="search" id="currentAddress" value=""/>
-        <a id="PlotMapAnchor" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-mini="true" data-inline="true">Plot</a>
+        <a id="PlotMapAnchor" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-mini="true"
+           data-inline="true">Plot</a>
 
     </div>
     </p>
 </div>
+
 </div>
+
+<a data-role="button" data-transition="none" data-theme="e" href="#" data-icon="star"
+   data-iconpos="left" id="ConfirmButton">
+    Confirm loss details and submit
+</a>
 </div>
 <div data-theme="b" data-role="footer" data-position="fixed">
     <h5>
@@ -273,7 +279,7 @@
     </div>
     <div data-role="content" style="padding: 15px">
         <div>
-            <input id="CurrentLocationFlag" type="hidden">
+            <input id="CurrentLocation" type="hidden">
             <img id="mapPlotImg" src=""/>
             <h4 id="LocationMarker"></h4>
         </div>
@@ -305,6 +311,7 @@
 <script src="jquery.confirm/jquery.confirm.js"></script>
 <script src="js/jquery.mobile.simpledialog2.js" type="text/javascript"></script>
 <script src="js/swoosh.js" type="text/javascript"></script>
+<script src="js/parse-1.1.4.js" type="text/javascript"></script>
 </section>
 </body>
 </html>
