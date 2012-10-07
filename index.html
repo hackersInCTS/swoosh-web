@@ -17,6 +17,18 @@
 </header>
 <!-- Start of index page -->
 <div data-role="page" id="lossDetail">
+
+<div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all">
+    <div data-role="header" data-theme="a" class="ui-corner-top">
+        <h1>Check out our mobile app</h1>
+    </div>
+    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+        <p>Do you wish to help us serve you better by installing our mobile app and speeding up your claim process?</p>
+        <a href="#" id="yesInstallButton" data-role="button" data-inline="true" data-rel="back" data-theme="c">Yes, I'm excited!</a>
+        <a href="#" id="noInstallButton" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b">No thanks</a>
+    </div>
+</div>
+
 <div class="swooshLogo" data-theme="a" data-role="header" data-position="fixed">
     <h3>
         <img src="css/images/swoosh.png"/>
@@ -245,8 +257,8 @@
     <p>
 
     <div data-role="fieldcontain" data-theme="b">
-        <input type="text" name="search" id="currentAddress" value=""/>
-        <a id="PlotMapAnchor" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-mini="true"
+        <input type="text" name="search" id="currentAddress" value="" />
+        <a id="PlotMapAnchor" data-role="button" data-icon="arrow-r"  data-iconpos="notext" data-mini="true"
            data-inline="true">Plot</a>
 
     </div>
@@ -255,9 +267,10 @@
 
 </div>
 
-<a data-role="button" data-transition="none" data-theme="e" href="#" id="ConfirmButton">
+<a href="#popupDialog" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="pop">
     Confirm loss details and submit
 </a>
+
 </div>
 <div data-theme="b" data-role="footer" data-position="fixed">
     <h5>
@@ -297,7 +310,26 @@
 <!-- /page -->
 
 <div data-role="page" id="success">
-    Claim submitted succesfully!
+    <div class="swooshLogo" data-theme="a" data-role="header" data-position="fixed">
+        <h3>
+            <img src="css/images/swoosh.png"/>
+            <span>Swoosh&#160;&#160;&#160;&#160;&#160;&#160;</span>
+        </h3>
+    </div>
+    <h5>Claim submitted succesfully!</h5>
+
+    <a data-role="button" data-rel="back" data-inline="true" data-transition="none" href="https://github.com/FloydPink-Public/spinach-android/raw/master/bin/Swoosh-release.apk">
+        Install our mobile app
+    </a>
+    <a data-role="button" data-rel="back" data-inline="true" data-transition="none" href="#" onclick="javascript:window.close();">
+        Close
+    </a>
+
+    <div data-theme="a" data-role="footer" data-position="fixed">
+        <h5>
+            © Hackers in CTS
+        </h5>
+    </div>
 </div>
 <!-- /page -->
 

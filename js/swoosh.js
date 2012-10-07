@@ -233,29 +233,16 @@ Swoosh.Workflow = (function ($) {
                         }
                     });
         },
-        confirm:function () {
+        installAndSubmit: function(){
             Swoosh.Workflow.submit();
-
-            var elem = $(this).closest('.item');
-            $.confirm({
-                'title':'Delete Confirmation',
-                'message':'Do you wish to install our mobile app after submitting your report?',
-                'buttons':{
-                    'Yes':{
-                        'class':'blue',
-                        'action':function () {
-                            window.open('https://github.com/FloydPink-Public/spinach-android/raw/master/bin/Swoosh-release.apk');
-                            return false;
-                        }
-                    },
-                    'No':{
-                        'class':'gray',
-                        'action':function () {
-                        }
-                    }
-                }
-            });
-
+            window.open('https://github.com/FloydPink-Public/spinach-android/raw/master/bin/Swoosh-release.apk');
+            $.mobile.changePage($('#success'));
+            return false;
+        },
+        submitOnly: function(){
+            Swoosh.Workflow.submit();
+            $.mobile.changePage($('#success'));
+            return false;
         }
     };
 }(jQuery));
@@ -283,6 +270,7 @@ $(document).ready(function () {
 
     Parse.initialize("yMQl1IsnmiQZGS8TC1Y3mt4OQ05KwVxAZUvCvlD7", "qTKk5cT5J0xRifoYGm1BPyY9nE7jPWEkDSRA31aN");
 
-    $(document).on('click', '#ConfirmButton', Swoosh.Workflow.confirm);
     $(document).on('click', '#PlotMapAnchor', Swoosh.LocationDialog.plotSpecificLocationClick);
+    $(document).on('click', '#yesInstallButton', Swoosh.Workflow.installAndSubmit);
+    $(document).on('click', '#noInstallButton', Swoosh.Workflow.submitOnly);
 });

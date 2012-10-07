@@ -61,3 +61,7 @@ label.headerLabel, legend.headerLabel{
 .ui-field-contain .ui-controlgroup-controls{
     width:35%;
 }
+
+#success h5{
+    padding-left: 20px;
+}
