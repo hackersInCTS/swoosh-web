@@ -3,7 +3,7 @@
 <head>
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HTML5 Demo: geolocation</title>
+    <title>Swoosh</title>
     <link href='http://fonts.googleapis.com/css?family=Cuprum&amp;subset=latin' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" type="text/css"/>
     <link rel="stylesheet" href="css/jquery.mobile.simpledialog.css" type="text/css"/>
@@ -11,10 +11,10 @@
     <link rel="stylesheet" type="text/css" href="jquery.confirm/jquery.confirm.css"/>
 </head>
 <body>
-<section id="wrapper">
 <header>
     <h1>Swoosh</h1>
 </header>
+
 <!-- Start of index page -->
 <div data-role="page" id="lossDetail">
 <div class="swooshLogo" data-theme="a" data-role="header" data-position="fixed">
@@ -24,55 +24,44 @@
     </h3>
 </div>
 <div data-role="content" style="padding: 15px">
-<div id="scannedData">
-<div data-role="collapsible" data-collapsed="true" data-theme="b">
+<div data-role="collapsible" data-collapsed="true" data-theme="a">
     <h3>Policy Information</h3>
 
-    <p>
-
-    <div data-role="fieldcontain" data-theme="b">
+    <div data-role="fieldcontain" data-theme="a">
         <label for="PolicyKey" class="headerLabel">Policy Number:</label>
-        <label for="PolicyKey" id="PolicyKey"></label>
+        <label id="PolicyKey"></label>
     </div>
-    </p>
 </div>
-<div data-role="collapsible" data-collapsed="false" data-theme="b">
+<div data-role="collapsible" data-collapsed="false" data-theme="a">
     <h3>Vehicle and Driver Info</h3>
 
-    <p>
-
-    <div data-role="fieldcontain" data-theme="b">
-        <label for="VehicleMake" class="headerLabel">Make:</label>
-        <label for="VehicleMake" id="VehicleMake"></label>
+    <div data-role="fieldcontain" data-theme="a">
+        <label class="headerLabel">Make:</label>
+        <label id="VehicleMake"></label>
     </div>
-
-    <div data-role="fieldcontain" data-theme="b">
-        <label for="VehicleModel" class="headerLabel">Model:</label>
-        <label for="VehicleModel" id="VehicleModel"></label>
+    <div data-role="fieldcontain" data-theme="a">
+        <label class="headerLabel">Model:</label>
+        <label id="VehicleModel"></label>
     </div>
-
-    <div data-role="fieldcontain" data-theme="b">
-        <label for="VehicleVIN" class="headerLabel">VIN:</label>
-        <label for="VehicleVIN" id="VehicleVIN"></label>
+    <div data-role="fieldcontain" data-theme="a">
+        <label class="headerLabel">VIN:</label>
+        <label id="VehicleVIN"></label>
     </div>
-    <div data-role="fieldcontain" data-theme="b">
-        <label for="VehicleColor" class="headerLabel">Year:</label>
-        <label for="VehicleColor" id="VehicleColor"></label>
+    <div data-role="fieldcontain" data-theme="a">
+        <label class="headerLabel">Year:</label>
+        <label id="VehicleColor"></label>
     </div>
-    <div data-role="fieldcontain" data-theme="b">
+    <div data-role="fieldcontain" data-theme="a">
         <label for="select-choice-driver" class="select headerLabel">Driver:</label>
         <select name="select-choice-driver" id="select-choice-driver">
         </select>
     </div>
-    </p>
 </div>
 
-<div data-role="collapsible" data-collapsed="false" data-theme="b">
+<div data-role="collapsible" data-collapsed="false" data-theme="a">
     <h3>Date and Time of loss</h3>
 
-    <p>
-
-    <div data-role="fieldcontain" data-theme="b">
+    <div data-role="fieldcontain" data-theme="a">
         <fieldset data-role="controlgroup" data-type="horizontal">
             <legend class="headerLabel">Date:</legend>
             <label for="select-choice-month">Month</label>
@@ -136,7 +125,7 @@
 
         </fieldset>
     </div>
-    <div data-role="fieldcontain" data-theme="b">
+    <div data-role="fieldcontain" data-theme="a">
         <fieldset data-role="controlgroup" data-type="horizontal">
             <legend class="headerLabel">Time:</legend>
 
@@ -232,34 +221,44 @@
                 <option value="59">59</option>
                 <!-- etc. -->
             </select>
-
-
         </fieldset>
     </div>
 
-    </p>
 </div>
-<div data-role="collapsible" data-collapsed="false" data-theme="b">
+<div data-role="collapsible" data-collapsed="false" data-theme="a">
     <h3>Location</h3>
 
-    <p>
-
-    <div data-role="fieldcontain" data-theme="b">
+    <div data-role="fieldcontain" data-theme="a">
+        <label for="currentAddress" class="ui-hidden-accessible">Current Address</label>
         <input type="text" name="search" id="currentAddress" value=""/>
         <a id="PlotMapAnchor" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-mini="true"
            data-inline="true">Plot</a>
 
     </div>
-    </p>
 </div>
 
+<div>
+    <a href="#popupDialog" data-rel="popup" data-position-to="window" data-role="button" data-inline="true"
+       data-theme="a"
+       data-transition="pop">Confirm Loss Details and Submit</a>
 </div>
+<div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a"
+     class="ui-corner-all">
+    <div data-role="header" data-theme="a" class="ui-corner-top">
+        <h1>Check out our mobile application!</h1>
+    </div>
+    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+        <h3 class="ui-title">Would you like us to serve you better by installing our mobile app to add more details to
+            this incident?</h3>
 
-<a data-role="button" data-transition="none" data-theme="e" href="#" id="ConfirmButton">
-    Confirm loss details and submit
-</a>
+        <p>This action cannot be undone.</p>
+        <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Cancel</a>
+        <a href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow"
+           data-theme="b">Yes. I am excited!</a>
+    </div>
 </div>
-<div data-theme="b" data-role="footer" data-position="fixed">
+</div>
+<div data-theme="a" data-role="footer" data-position="fixed">
     <h5>
         © Hackers in CTS
     </h5>
@@ -267,8 +266,6 @@
 </div>
 <!-- /page -->
 
-
-<!-- Start of map page -->
 <div data-role="page" id="map">
     <div data-theme="a" data-role="header" data-position="fixed">
         <h3>
@@ -294,8 +291,8 @@
         </h5>
     </div>
 </div>
-<!-- /page -->
 
+<!-- success page -->
 <div data-role="page" id="success">
     Claim submitted succesfully!
 </div>
@@ -310,6 +307,7 @@
 <script src="js/jquery.mobile.simpledialog2.js" type="text/javascript"></script>
 <script src="js/swoosh.js" type="text/javascript"></script>
 <script src="js/parse-1.1.4.js" type="text/javascript"></script>
-</section>
+
+
 </body>
 </html>
