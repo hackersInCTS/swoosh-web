@@ -45,3 +45,7 @@
     display:block;
     border:none;
 }
+
+label.headerLabel, legend.headerLabel{
+    font-weight: bold;
+}

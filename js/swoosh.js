@@ -15,10 +15,71 @@ var MapViewModel = function () {
 
 var Swoosh = Swoosh || {};
 
+Swoosh.Common = (function ($) {
+    return {
+        alert:function (message) {
+            try {
+                navigator.notification.alert(message, $.noop, "Swoosh");
+            }
+            catch (e) {
+                alert(message);
+            }
+        },
+        getQueryStringValue:function (name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regexS = "[\\?&]" + name + "=([^&#]*)";
+            var regex = new RegExp(regexS);
+            var results = regex.exec(window.location.search);
+            if (results == null)
+                return "";
+            else
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
+        },
+        populateDropDown:function (dropdownId, items, selectedValue) {
+            var dropdown = $(dropdownId);
+            $(items).each(function (index, value) {
+                    if (value === selectedValue) {
+                        dropdown.append($("<option />").val(value).text(value)).attr('selected', true);
+                    }
+                    else {
+                        dropdown.append($("<option />").val(value).text(value));
+                    }
+                }
+            );
+        }
+    };
+}(jQuery));
+
 Swoosh.Home = (function ($) {
     return{
         deviceReady:function () {
 
+        },
+        populatePolicyData:function () {
+            var policyData = $.parseJSON(Swoosh.Common.getQueryStringValue('policyJson'));
+            $('#PolicyKey').text(policyData.PolicyKey);
+            $('#VehicleMake').text(policyData.VehicleMake);
+            $('#VehicleModel').text(policyData.VehicleModel);
+            $('#VehicleVIN').text(policyData.VehicleVIN);
+            $('#VehicleColor').text(policyData.VehicleColor);
+
+            Swoosh.Common.populateDropDown('#select-choice-driver', policyData.Driver, policyData.PrimaryInsured);
+            //$('#select-choice-driver option:eq(' + policyData.PrimaryInsured + ')').prop('selected', true);
+            //$('#select-choice-driver').val(policyData.PrimaryInsured);
+
+            var d = new Date();
+            var dayIndex = d.getDate() + "";
+            var monthIndex = d.getMonth() + "";
+            var yearIndex = d.getFullYear() + "";
+            var hourIndex = d.getHours() + "";
+            var minuteIndex = d.getMinutes() + "";
+
+            $('#select-choice-day option:eq(' + dayIndex + ')').prop('selected', true);
+            $('#select-choice-month option:eq(' + monthIndex + ')').prop('selected', true);
+            $('#select-choice-year option[value="' + yearIndex + '"]').prop('selected', true);
+
+            $('#select-choice-hour option[value="' + hourIndex + '"]').prop('selected', true);
+            $('#select-choice-minute option[value="' + minuteIndex + '"]').prop('selected', true);
         },
         goToMapPage:function () {
             Swoosh.Map.resetMaps();
@@ -30,11 +91,7 @@ Swoosh.Home = (function ($) {
 Swoosh.Map = (function ($) {
     return {
         initialize:function () {
-            if ($('#CurrentLocationFlag').val() === 'true') {
-                Swoosh.Map.getCurrentPositionAndGeocode();
-            } else {
-                Swoosh.Map.getSpecificLocation();
-            }
+            Swoosh.Map.getSpecificLocation();
         },
         resetMaps:function () {
             $('#mapPlotImg').attr('src', '');
@@ -190,7 +247,7 @@ Swoosh.Location = (function ($) {
 
 Swoosh.Workflow = (function ($) {
     return {
-        submit:function(){
+        submit:function () {
 //          TODO: Build json and pass it to Parse backend
 //            {
 //                "PolicyKey": "123456ABC",
@@ -211,37 +268,37 @@ Swoosh.Workflow = (function ($) {
 //            }
 
         },
-        notify: function(){
+        notify:function () {
             return true;
         },
-        confirm: function(){
+        confirm:function () {
 
             Swoosh.Workflow.submit();
 
             var elem = $(this).closest('.item');
 
             $.confirm({
-                'title'		: 'Delete Confirmation',
-                'message'	: 'Do you wish to install our mobile app after submitting your report?',
-                'buttons'	: {
-                    'Yes'	: {
-                        'class'	: 'blue',
-                        'action': function(){
+                'title':'Delete Confirmation',
+                'message':'Do you wish to install our mobile app after submitting your report?',
+                'buttons':{
+                    'Yes':{
+                        'class':'blue',
+                        'action':function () {
                             //elem.slideUp();
-                            $.get('https://github.com/FloydPink-Public/spinach-android/raw/master/bin/Swoosh-release.apk',function(data) {
+                            $.get('https://github.com/FloydPink-Public/spinach-android/raw/master/bin/Swoosh-release.apk', function (data) {
                                 $(this).simpledialog2({
-                                    'mode' : 'blank',
-                                    'prompt': false,
-                                    'forceInput': false,
+                                    'mode':'blank',
+                                    'prompt':false,
+                                    'forceInput':false,
                                     'useModal':true,
-                                    'fullHTML' : data
+                                    'fullHTML':data
                                 });
                             });
                         }
                     },
-                    'No'	: {
-                        'class'	: 'gray',
-                        'action': function(){
+                    'No':{
+                        'class':'gray',
+                        'action':function () {
                         }
                     }
                 }
@@ -263,6 +320,11 @@ Swoosh.LocationDialog = (function ($) {
     };
 }(jQuery));
 
+//Page specific initialize events
+$(document).on("pageshow", "#map", function () {
+    Swoosh.Map.initialize();
+});
+
 $(document).ready(function () {
 
 //    if (navigator.geolocation) {
@@ -272,10 +334,11 @@ $(document).ready(function () {
 //    }
 
     Swoosh.Map.getCurrentPositionAndGeocode();
+    Swoosh.Home.populatePolicyData();
 
-    $(document).on('deviceready', Swoosh.Home.deviceReady);
+    //Parse.initialize("yMQl1IsnmiQZGS8TC1Y3mt4OQ05KwVxAZUvCvlD7", "qTKk5cT5J0xRifoYGm1BPyY9nE7jPWEkDSRA31aN");
 
     $(document).on('click', '#NotifyButton', Swoosh.Workflow.notify);
     $(document).on('click', '#ConfirmButton', Swoosh.Workflow.confirm);
-    $(document).on('click', '#PlotSpecificLocationButton', Swoosh.LocationDialog.plotSpecificLocationClick);
+    $(document).on('click', '#PlotMapAnchor', Swoosh.LocationDialog.plotSpecificLocationClick);
 });
