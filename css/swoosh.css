@@ -51,5 +51,13 @@ label.headerLabel, legend.headerLabel{
 }
 
 #currentAddress{
-    max-width: 90%;
+    max-width: 70%;
+}
+
+.swooshLogo img {
+    vertical-align: middle;
+}
+
+.ui-field-contain .ui-controlgroup-controls{
+    width:35%;
 }
