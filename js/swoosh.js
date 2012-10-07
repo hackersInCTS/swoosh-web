@@ -127,7 +127,6 @@ Swoosh.Map = (function ($) {
             var onReverseGeocodeSuccess = function (mapViewModel) {
                 return function (resolvedCity) {
                     $('#LocationMarker').text(resolvedCity);
-//                    Swoosh.Map.plotMap(mapViewModel);
                     $('#currentAddress').val(resolvedCity);
 
                 };
@@ -240,16 +239,8 @@ Swoosh.Workflow = (function ($) {
                     'Yes':{
                         'class':'blue',
                         'action':function () {
-                            //elem.slideUp();
-                            $.get('https://github.com/FloydPink-Public/spinach-android/raw/master/bin/Swoosh-release.apk', function (data) {
-                                $(this).simpledialog2({
-                                    'mode':'blank',
-                                    'prompt':false,
-                                    'forceInput':false,
-                                    'useModal':true,
-                                    'fullHTML':data
-                                });
-                            });
+                            window.open('https://github.com/FloydPink-Public/spinach-android/raw/master/bin/Swoosh-release.apk');
+                            return false;
                         }
                     },
                     'No':{
