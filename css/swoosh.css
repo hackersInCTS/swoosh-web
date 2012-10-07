@@ -49,3 +49,7 @@
 label.headerLabel, legend.headerLabel{
     font-weight: bold;
 }
+
+#currentAddress{
+    max-width: 90%;
+}

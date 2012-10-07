@@ -15,7 +15,6 @@
 <header>
     <h1>Swoosh</h1>
 </header>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Start of index page -->
 <div data-role="page" id="lossDetail">
 <div class="swooshLogo" data-theme="a" data-role="header" data-position="fixed">
@@ -32,13 +31,13 @@
     <p>
 
     <div data-role="fieldcontain" data-theme="b">
-        <label for="PolicyKey">Policy Number:</label>
+        <label for="PolicyKey" class="headerLabel">Policy Number:</label>
         <label for="PolicyKey" id="PolicyKey"></label>
     </div>
     </p>
 </div>
 <div data-role="collapsible" data-collapsed="false" data-theme="b">
-    <h3>Vehicle and Driver Information</h3>
+    <h3>Vehicle and Driver Info</h3>
 
     <p>
 
@@ -139,7 +138,7 @@
     </div>
     <div data-role="fieldcontain" data-theme="b">
         <fieldset data-role="controlgroup" data-type="horizontal">
-            <legend>Time:</legend>
+            <legend class="headerLabel">Time:</legend>
 
             <label for="select-choice-hour" class="headerLabel">Hour</label>
             <select name="select-choice-hour" id="select-choice-hour">
@@ -256,8 +255,7 @@
 
 </div>
 
-<a data-role="button" data-transition="none" data-theme="e" href="#" data-icon="star"
-   data-iconpos="left" id="ConfirmButton">
+<a data-role="button" data-transition="none" data-theme="e" href="#" id="ConfirmButton">
     Confirm loss details and submit
 </a>
 </div>

@@ -37,6 +37,7 @@ Swoosh.Common = (function ($) {
         },
         populateDropDown:function (dropdownId, items, selectedValue) {
             var dropdown = $(dropdownId);
+            $('option', dropdown).remove();
 
             $(items).each(function (index, value) {
                     var o = new Option(value, value);
