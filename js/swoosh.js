@@ -37,15 +37,14 @@ Swoosh.Common = (function ($) {
         },
         populateDropDown:function (dropdownId, items, selectedValue) {
             var dropdown = $(dropdownId);
+
             $(items).each(function (index, value) {
-                    if (value === selectedValue) {
-                        dropdown.append($("<option />").val(value).text(value)).attr('selected', true);
-                    }
-                    else {
-                        dropdown.append($("<option />").val(value).text(value));
-                    }
+                    var o = new Option(value, value);
+                    $(o).html(value);
+                    dropdown.append(o);
                 }
             );
+            dropdown.selectmenu("refresh", true);
         }
     };
 }(jQuery));
@@ -61,8 +60,7 @@ Swoosh.Home = (function ($) {
             $('#VehicleColor').text(policyData.VehicleColor);
 
             Swoosh.Common.populateDropDown('#select-choice-driver', policyData.Driver, policyData.PrimaryInsured);
-            //$('#select-choice-driver option:eq(' + policyData.PrimaryInsured + ')').prop('selected', true);
-            //$('#select-choice-driver').val(policyData.PrimaryInsured);
+            $('#select-choice-driver option:eq(' + policyData.PrimaryInsured + ')').prop('selected', true);
 
             var d = new Date();
             var dayIndex = d.getDate() + "";
