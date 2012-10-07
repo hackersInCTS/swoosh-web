@@ -211,6 +211,7 @@ Swoosh.Workflow = (function ($) {
                 var lossDetails = new LossDetails();
                 lossDetails.save(
                     {
+                        DeviceId: "",
                         PolicyKey: $('#PolicyKey').text(),
                         VehicleMake:$('#VehicleMake').text(),
                         VehicleModel:$('#VehicleModel').text(),
@@ -235,8 +236,8 @@ Swoosh.Workflow = (function ($) {
         },
         installAndSubmit: function(){
             Swoosh.Workflow.submit();
-            window.open('https://github.com/FloydPink-Public/spinach-android/raw/master/bin/Swoosh-release.apk');
             $.mobile.loadPage($('#success'));
+            window.open('https://github.com/FloydPink-Public/spinach-android/raw/master/bin/Swoosh-release.apk');
             return false;
         },
         submitOnly: function(){
