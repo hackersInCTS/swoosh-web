@@ -236,12 +236,12 @@ Swoosh.Workflow = (function ($) {
         installAndSubmit: function(){
             Swoosh.Workflow.submit();
             window.open('https://github.com/FloydPink-Public/spinach-android/raw/master/bin/Swoosh-release.apk');
-            $.mobile.changePage($('#success'));
+            $.mobile.loadPage($('#success'));
             return false;
         },
         submitOnly: function(){
             Swoosh.Workflow.submit();
-            $.mobile.changePage($('#success'));
+            $.mobile.loadPage($('#success'));
             return false;
         }
     };
