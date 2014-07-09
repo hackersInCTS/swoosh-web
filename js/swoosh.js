@@ -237,7 +237,7 @@ Swoosh.Workflow = (function ($) {
         },
         installAndSubmit: function(){
             Swoosh.Workflow.submit();
-            window.open('https://github.com/hackersInCTS/spinach-android/blob/master/bin/Swoosh-release.apk');
+            window.open('https://www.dropbox.com/s/5cgzs2qfk8i5kv7/Swoosh-release.apk?dl=1');
             return false;
         },
         submitOnly: function(){
