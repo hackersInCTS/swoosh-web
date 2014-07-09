@@ -271,6 +271,6 @@ $(document).ready(function () {
     Parse.initialize("yMQl1IsnmiQZGS8TC1Y3mt4OQ05KwVxAZUvCvlD7", "qTKk5cT5J0xRifoYGm1BPyY9nE7jPWEkDSRA31aN");
 
     $(document).on('click', '#PlotMapAnchor', Swoosh.LocationDialog.plotSpecificLocationClick);
-    $(document).on('click', '#yesInstallButton', Swoosh.Workflow.submitOnly);
+    $(document).on('click', '#yesInstallButton', Swoosh.Workflow.installAndSubmit);
     $(document).on('click', '#noInstallButton', Swoosh.Workflow.submitOnly);
 });
